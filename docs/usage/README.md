@@ -1,1 +1,1 @@
-# Usage\nInstructions for using the project and its components.
+# Usage\nInstructions for using the project and its components

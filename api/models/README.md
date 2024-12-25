@@ -1,1 +1,1 @@
-# Models\nContains API models (e.g., Item, User).
+# Models\nContains API models (e.g., Item, User)
