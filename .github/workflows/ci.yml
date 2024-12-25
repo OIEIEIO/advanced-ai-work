@@ -10,18 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Checkout the repository code
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # Set up Python environment
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.10'
 
+    # Install required dependencies
     - name: Install minimal dependencies
       run: |
-        pip install flask pytest==7.4.0
+        python -m pip install --upgrade pip
+        pip install flask pytest==7.4.0 anyio
 
+    # Print environment and Python path for debugging
+    - name: Print environment variables
+      run: env
+
+    - name: Print Python path
+      run: python -c "import sys; print(sys.path)"
+
+    # Check for tests and execute them if available
     - name: Check for tests
       id: check_tests
       run: |
@@ -32,17 +44,13 @@ jobs:
           echo "No tests found, skipping"
           echo "has_tests=false" >> $GITHUB_ENV
         fi
-        
+
     - name: Run tests
       if: env.has_tests == 'true'
       run: |
-        pytest
+        pytest api/tests
 
-        - name: Run tests
-        run: |
-          if [ -d "api/tests" ] && [ "$(ls -A api/tests)" ]; then
-            echo "Tests found, running pytest"
-            pytest
-          else
-            echo "No tests found, skipping"
-      
+    - name: Skip tests
+      if: env.has_tests != 'true'
+      run: |
+        echo "No tests to run, skipping test stage"
