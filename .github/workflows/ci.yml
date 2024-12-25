@@ -20,7 +20,7 @@ jobs:
 
     - name: Install minimal dependencies
       run: |
-        pip install pytest==7.4.0
+        pip install flask pytest==7.4.0
 
     - name: Check for tests
       id: check_tests
@@ -32,8 +32,17 @@ jobs:
           echo "No tests found, skipping"
           echo "has_tests=false" >> $GITHUB_ENV
         fi
-
+        
     - name: Run tests
       if: env.has_tests == 'true'
       run: |
         pytest
+
+        - name: Run tests
+        run: |
+          if [ -d "api/tests" ] && [ "$(ls -A api/tests)" ]; then
+            echo "Tests found, running pytest"
+            pytest
+          else
+            echo "No tests found, skipping"
+      
