@@ -26,12 +26,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install flask pytest==7.4.0 anyio
 
-    # Print environment and Python path for debugging
-    - name: Print environment variables
-      run: env
-
-    - name: Print Python path
-      run: python -c "import sys; print(sys.path)"
+    # Set PYTHONPATH
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
 
     # Check for tests and execute them if available
     - name: Check for tests
