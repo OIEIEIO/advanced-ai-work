@@ -1,0 +1,9 @@
+logs/
+backups/
+uploads/
+webpage/images/placeholder_image.png
+webpage/images/banner.png
+*.npy
+*.log
+*.tar.gz
+*.zip
